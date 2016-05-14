@@ -49,8 +49,8 @@ def order_films(PROJECT_NAME):
     current_year_file = PROJECT_NAME + '/Year_' + str(current_date) + '.txt'
     previous_year_file = PROJECT_NAME + '/Year_' + str((current_date-1)) + '.txt'
 
-    previous_year_set = file_to_set(current_year_file)
-    current_year_set = file_to_set(previous_year_file)
+    previous_year_set = file_to_set(previous_year_file)
+    current_year_set = file_to_set(current_year_file)
 
     set_to_file(previous_year_set, previous_year_file)
     set_to_file(current_year_set, current_year_file)
