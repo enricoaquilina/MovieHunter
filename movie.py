@@ -7,7 +7,7 @@ import string
 
 # white_list = ['hdrip', 'brrip', 'dvdrip', '1080p', 'hc']
 black_list = ['hd-tc', 'tc', '480p', 'cam', 'ts', 'scr', 'camrip', 'scrrip', 'hdtc']
-language_black_list = ['french', 'russian', 'rus', 'hindi', 'german', 'ita', 'italian', 'punjabi', 'desiscr', 'desi', 'chinese', 'dublado']
+language_black_list = ['french', 'russian', 'rus', 'hindi', 'german', 'ita', 'italian', 'punjabi', 'telugu', 'desiscr', 'desi', 'chinese', 'dublado']
 
 def has_seeders(cols):
     seeds = int(cols[2].renderContents())
@@ -39,7 +39,7 @@ def is_high_quality(title_parts):
 def is_title_foreign_free(title_parts):
     for i in range(len(title_parts)):
         for j in range(len(language_black_list)):
-            if title_parts[i].lower() == language_black_list[j]:
+            if language_black_list[j].lower() in title_parts[i].lower():
                 return False
     return True
 
