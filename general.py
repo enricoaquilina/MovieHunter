@@ -1,8 +1,10 @@
 import os
 import datetime
 import unicodedata as ud
+import os
 
-latin_letters= {}
+PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
+latin_letters = {}
 
 def get_all_links(important_column):
     return important_column.findAll('a', href=True)
@@ -14,9 +16,9 @@ def getDate():
     return datetime.datetime.now()
 
 def create_project_directory(directory):
-    if not os.path.exists(directory):
+    if not os.path.exists(PROJECT_PATH + '/' + directory):
         print('Creating project ' + directory)
-        os.makedirs(directory)
+        os.makedirs(PROJECT_PATH + '/' + directory)
 
 def write_file(file_name, contents):
     f = open(file_name, 'w')
@@ -44,10 +46,12 @@ def set_to_file(linkSet, file):
         append_to_file(file, line)
     return file
 
-def order_films(PROJECT_NAME):
+def order_films(path, PROJECT_NAME):
     current_date = getDate().year
-    current_year_file = PROJECT_NAME + '/Year_' + str(current_date) + '.txt'
-    previous_year_file = PROJECT_NAME + '/Year_' + str((current_date-1)) + '.txt'
+
+
+    current_year_file = os.path.dirname(os.path.realpath(__file__))  + '/' + PROJECT_NAME + '/Year_' + str(current_date) + '.txt'
+    previous_year_file = os.path.dirname(os.path.realpath(__file__)) + '/' + PROJECT_NAME + '/Year_' + str((current_date-1)) + '.txt'
 
     previous_year_set = file_to_set(previous_year_file)
     current_year_set = file_to_set(current_year_file)
@@ -70,14 +74,15 @@ def contains_set_string(root, filters):
                 return True
     return False
 
-def does_file_exist(project_name, year):
-    file_name = project_name + '/Year_' + year + '.txt'
+def does_file_exist(project_path, project_name, year):
+    file_name = project_path + '/' + project_name + '/Year_' + year + '.txt'
     if not os.path.isfile(file_name):
        write_file(file_name, '')
     return True
 
-def does_film_exist(project_name, film_title, year):
-    available_films = file_to_set(project_name + '/Year_' + year + '.txt')
+def does_film_exist(project_path, project_name, film_title, year):
+    available_films = file_to_set(project_path + '/' + project_name + '/Year_' + year + '.txt')
+
     for existing_film in available_films:
         if film_title not in existing_film:
             continue
