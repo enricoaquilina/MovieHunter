@@ -1,9 +1,12 @@
 from general import *
 from nltk.tokenize import word_tokenize
 import enchant
+import requests
 usa_dict = enchant.Dict('en_US')
 gb_dict = enchant.Dict('en_GB')
 import string
+import json
+import webbrowser
 
 # white_list = ['hdrip', 'brrip', 'dvdrip', '1080p', 'hc']
 black_list = ['hd-tc', 'tc', '480p', 'cam', 'ts', 'scr', 'camrip', 'scrrip', 'hdtc']
@@ -32,7 +35,7 @@ def break_movie_title(raw_title):
 def is_high_quality(title_parts):
     for i in range(len(title_parts)):
         for j in range(len(black_list)):
-            if black_list[j].lower() in title_parts[i].lower():
+            if black_list[j].lower() == title_parts[i].lower():
                 return False
     return True
 
@@ -72,10 +75,24 @@ def get_date_delimeter(title_parts):
 def parse_film_title(raw_film_title):
     film_title = ''
     for piece in raw_film_title:
-        exclude = set(string.punctuation)
+        exclude = set(string.punctuation.replace("'", ""))
         film_title += ''.join(ch for ch in piece if ch not in exclude)+' '
 
-    return film_title.lower().replace('  ', ' ').strip()
+    return film_title.lower().replace('  ', ' ').replace('\\', '').strip()
+
+def check_imdb_lang(film_title, film_year):
+    film_title_concat = film_title.replace(' ', '+')
+    film_title_concat = film_title_concat.replace('\'', '%27')
+    req = requests.get("http://www.omdbapi.com/?t=" + film_title_concat + "&type=movie&year="+film_year)
+    data_json = json.loads(req.text)
+
+    if len(data_json) == 2 and (str(data_json['Error'])).lower() == 'movie not found!':
+        return False
+    elif 'english' or 'n/a' in (str(data_json['Language'])).lower():
+        return True
 
 def download_movie(magnet_link):
-    os.system('transmission-gtk ' + magnet_link)
+    # os.system('transmission-gtk')
+    # webbrowser.open(magnet_link)
+    os.system('transmission-remote -n "transmission:transmission" -a "'+magnet_link+'"')
+    # os.system('transmission-gtk ' + magnet_link)

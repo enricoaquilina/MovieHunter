@@ -40,13 +40,14 @@ while count < 4:
                             film_title = parse_film_title(title_parts[0:date_delimeter])
                             if only_roman_chars(film_title):
                                 if is_title_foreign_free(title_parts):
-                                    # if is_title_in_english(break_movie_title(film_title)):
+                                    if is_title_in_english(break_movie_title(film_title)):
                                         if is_high_quality(title_parts):
-                                            if does_file_exist(PROJECT_PATH, PROJECT_NAME, film_year):
-                                                if does_film_exist(PROJECT_PATH, PROJECT_NAME, film_title, film_year):
-                                                    download_movie(links[1]['href'])
-                                                    print('Downloading '+film_title)
-                                                    append_to_file(PROJECT_PATH+'/'+PROJECT_NAME + '/Year_'+film_year+'.txt', film_title)
+                                            if check_imdb_lang(film_title, film_year):
+                                                if does_file_exist(PROJECT_PATH, PROJECT_NAME, film_year):
+                                                    if does_film_exist(PROJECT_PATH, PROJECT_NAME, film_title, film_year):
+                                                        download_movie(links[1]['href'])
+                                                        print('Downloading '+film_title)
+                                                        append_to_file(PROJECT_PATH+'/'+PROJECT_NAME + '/Year_'+film_year+'.txt', film_title)
 
     except Exception as ex:
         print('An error occurred!')
