@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a92f75d7-f2ee-4e7d-a464-2cecf7503c11" name="Default" comment="check for russian characters &#10;added check so that we omit films who have the language in the title">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Movie_Hunter/Year_2015.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Movie_Hunter/Year_2016.txt" afterPath="" />
+    <list default="true" id="a92f75d7-f2ee-4e7d-a464-2cecf7503c11" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/movie.py" afterPath="$PROJECT_DIR$/movie.py" />
     </list>
     <ignored path="PirateHunter.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -331,7 +327,14 @@
       <option name="project" value="LOCAL" />
       <updated>1462635313762</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="added imdb checking for language">
+      <created>1465301778676</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1465301778676</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -386,7 +389,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="check for russian characters &#10;added check so that we omit films who have the language in the title" />
-    <option name="LAST_COMMIT_MESSAGE" value="check for russian characters &#10;added check so that we omit films who have the language in the title" />
+    <MESSAGE value="added imdb checking for language" />
+    <option name="LAST_COMMIT_MESSAGE" value="added imdb checking for language" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -496,6 +500,14 @@
             <element signature="e#0#21#0" expanded="true" />
             <marker date="1465301440533" expanded="true" signature="2563:2571" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
