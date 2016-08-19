@@ -93,7 +93,10 @@ def does_film_exist(project_path, project_name, film_title, year):
 def clean(dirty_text):
     dirty_text = dirty_text.replace('(', '')
     clean_text = dirty_text.replace(')', '')
-    return clean_text
+    # print(clean_text)
+    if is_number(clean_text):
+        return True, clean_text
+    return False, ''
 
 def is_latin(uchr):
     try: return latin_letters[uchr]
@@ -104,3 +107,19 @@ def only_roman_chars(unistr):
     return all(is_latin(uchr)
            for uchr in unistr
            if uchr.isalpha())
+
+
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        pass
+
+    try:
+        import unicodedata
+        unicodedata.numeric(s)
+        return True
+    except (TypeError, ValueError):
+        pass
+    return False

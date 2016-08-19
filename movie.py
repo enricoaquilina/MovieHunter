@@ -9,13 +9,23 @@ import json
 import webbrowser
 
 # white_list = ['hdrip', 'brrip', 'dvdrip', '1080p', 'hc']
-black_list = ['hd-tc', 'tc', '480p', 'cam', 'ts', 'scr', 'camrip', 'scrrip', 'hdtc']
-language_black_list = ['french', 'russian', 'rus', 'hindi', 'german', 'ita', 'italian', 'punjabi', 'telugu', 'desiscr', 'desi', 'chinese', 'dublado']
+black_list = ['hd-tc', 'tc', '480p', 'cam', 'ts', 'scr', 'camrip', 'scrrip', 'hdtc', 'hdca']
+language_black_list = \
+    ['french', 'russian', 'rus',
+     'hindi', 'german', 'ita',
+     'italian', 'punjabi', 'telugu',
+     'desiscr', 'desi', 'chinese',
+     'dublado', 'tamil', 'bengali',
+     'marathi', 'urdu', 'gujarati',
+     'kannada', 'malayalam', 'odia',
+     'assamese']
 
-def has_seeders(cols):
+def get_seeders(cols):
     seeds = int(cols[2].renderContents())
     if seeds > 0:
-        return True
+        return seeds
+    else:
+        return 0
 
 def break_movie_title(raw_title):
     title_parts = word_tokenize(raw_title)
@@ -42,7 +52,7 @@ def is_high_quality(title_parts):
 def is_title_foreign_free(title_parts):
     for i in range(len(title_parts)):
         for j in range(len(language_black_list)):
-            if language_black_list[j].lower() in title_parts[i].lower():
+            if language_black_list[j].lower() == title_parts[i].lower():
                 return False
     return True
 
@@ -75,20 +85,20 @@ def get_date_delimeter(title_parts):
 def parse_film_title(raw_film_title):
     film_title = ''
     for piece in raw_film_title:
-        exclude = set(string.punctuation.replace("'", ""))
+        exclude = set(string.punctuation.replace("'", "").replace("&", "").replace("_", " "))
         film_title += ''.join(ch for ch in piece if ch not in exclude)+' '
 
-    return film_title.lower().replace('  ', ' ').replace('\\', '').strip()
+    return film_title.lower().replace('  ', ' ').replace('\\', '').replace("&", "and").strip()
 
 def check_imdb_lang(film_title, film_year):
     film_title_concat = film_title.replace(' ', '+')
     film_title_concat = film_title_concat.replace('\'', '%27')
-    req = requests.get("http://www.omdbapi.com/?t=" + film_title_concat + "&type=movie&year="+film_year)
+    req = requests.get("http://www.omdbapi.com/?t=" + film_title_concat + "&y="+film_year)
     data_json = json.loads(req.text)
 
     if len(data_json) == 2 and (str(data_json['Error'])).lower() == 'movie not found!':
         return False
-    elif 'english' or 'n/a' in (str(data_json['Language'])).lower():
+    elif any(x in (str(data_json['Language'])).lower() for x in ['english', 'n/a']):
         return True
 
 def download_movie(magnet_link):
